@@ -1,0 +1,258 @@
+:root{
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --text: #0f1720;
+  --muted: #6b7280;
+  --accent: #6366f1;
+  --good: #10b981;
+  --bad: #ef4444;
+}
+
+[data-theme='dark']{
+  --bg: #1f2937;
+  --card: #0f1724;
+  --text: #e6eef8;
+  --muted: #9aa6b2;
+  --accent: #7c83ff;
+  --good: #34d399;
+  --bad: #fb7185;
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+
+.app{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.container{max-width:1100px;margin:24px auto;padding:0 16px;width:100%}
+
+.header{
+  display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:transparent
+}
+.brand{font-weight:700;font-size:1.15rem;display:flex;gap:8px;align-items:center}
+.brand{font-weight:800;font-size:1.22rem;display:inline-block;padding:2px 0;letter-spacing:0.2px}
+
+/* Neon gradient text for brand */
+.brand{
+  background: linear-gradient(90deg,#06b6d4,#7c3aed,#38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 8px rgba(6,182,212,0.18), 0 4px 24px rgba(124,58,237,0.12), 0 0 16px rgba(56,189,248,0.10);
+}
+.nav{display:flex;gap:8px;align-items:center}
+.btn{background:var(--card);border:1px solid rgba(0,0,0,0.04);padding:8px 12px;border-radius:8px;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,0.04);transition:transform .12s ease, box-shadow .12s ease}
+.btn:hover{transform:translateY(-2px)}
+.accent{background:linear-gradient(90deg,var(--accent),#4f46e5);color:white;border:none}
+
+.layout{display:flex;gap:20px}
+
+.card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+
+.task-list{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.task-card{padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;gap:8px}
+.task-head{display:flex;align-items:center;justify-content:space-between}
+.task-items{display:flex;flex-direction:column;gap:6px;padding-left:8px}
+.task-item{display:flex;align-items:center;gap:8px}
+
+.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:flex;align-items:center;justify-content:center}
+.modal{width:100%;max-width:720px;background:var(--card);padding:18px;border-radius:12px}
+
+@media (max-width:800px){
+  .container{margin:12px}
+  .nav{gap:6px}
+}
+
+/* Calendar styles */
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.day-box{min-height:80px;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.04);display:flex;flex-direction:column;justify-content:space-between}
+.day-num{font-weight:600}
+.growth-badge{font-size:0.85rem;padding:4px 6px;border-radius:6px;text-align:center}
+
+/* Enhanced button visuals */
+.nav .btn{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid rgba(16,24,40,0.06);background:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));box-shadow:0 6px 18px rgba(2,6,23,0.06), 0 0 10px rgba(56,189,248,0.06);color:var(--text);font-weight:600;transition:transform .14s ease, box-shadow .14s ease, background .14s ease;text-decoration:none;text-shadow:0 0 8px rgba(255,255,255,0.55);position:relative;z-index:1
+}
+.nav .btn:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(14,165,233,0.14), 0 0 24px rgba(56,189,248,0.12)}
+
+/* Pseudo-element glow behind buttons so they emit neon in dark mode */
+.nav .btn::after{
+  content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120%;height:120%;border-radius:14px;background:radial-gradient(circle at center, rgba(56,189,248,0.18), rgba(56,189,248,0.06) 35%, transparent 45%);filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .18s ease, transform .18s ease;z-index:-1
+}
+.nav .btn:hover::after{opacity:0.6;transform:translate(-50%,-50%) scale(1.05)}
+
+[data-theme='dark'] .nav .btn::after{
+  opacity:0.28;filter:blur(18px)
+}
+[data-theme='dark'] .nav .btn.accent::after{
+  background:radial-gradient(circle at center, rgba(6,182,212,0.36), rgba(14,165,233,0.22) 40%, transparent 55%);opacity:0.45;filter:blur(22px)
+}
+
+/* Ensure all text uses the theme text color in dark mode for high contrast */
+[data-theme='dark'] body,
+[data-theme='dark'] .card,
+[data-theme='dark'] .task-card,
+[data-theme='dark'] .modal,
+[data-theme='dark'] h1,
+[data-theme='dark'] h2,
+[data-theme='dark'] h3,
+[data-theme='dark'] h4,
+[data-theme='dark'] p,
+[data-theme='dark'] label,
+[data-theme='dark'] button,
+[data-theme='dark'] a,
+[data-theme='dark'] input,
+[data-theme='dark'] textarea,
+[data-theme='dark'] select{
+  color: var(--text) !important;
+}
+
+/* Modal background in dark mode should use the card variable (dark) */
+[data-theme='dark'] .modal{ background: var(--card); }
+
+/* Placeholders readable in dark mode */
+[data-theme='dark'] input::placeholder,
+[data-theme='dark'] textarea::placeholder{ color: rgba(230,238,248,0.6); }
+
+/* Disable glow specifically for the Add Task button */
+.nav .btn.no-glow::after{opacity:0 !important;display:block;filter:blur(0) !important}
+.nav .btn.no-glow{box-shadow:0 6px 14px rgba(2,6,23,0.04) !important;text-shadow:none !important}
+.nav .btn.no-glow:hover{box-shadow:0 8px 18px rgba(2,6,23,0.06) !important;transform:translateY(-2px)}
+.nav .btn:active{transform:translateY(-1px)}
+
+/* Accent button already used for primary actions */
+.nav .btn.accent{
+  background:linear-gradient(90deg,#38bdf8,#0ea5e9);color:white;border:none;box-shadow:0 14px 48px rgba(14,165,233,0.24), 0 0 28px rgba(56,189,248,0.18);text-shadow:0 0 12px rgba(255,255,255,0.95)
+}
+[data-theme='dark'] .nav .btn{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+  text-shadow: 0 0 6px rgba(255,255,255,0.06);
+  box-shadow: 0 6px 20px rgba(2,6,23,0.5), 0 0 12px rgba(56,189,248,0.06);
+}
+
+[data-theme='dark'] .nav .btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 44px rgba(14,165,233,0.2), 0 0 36px rgba(56,189,248,0.16);
+}
+
+[data-theme='dark'] .nav .btn.accent{
+  background: linear-gradient(90deg,#06b6d4,#0ea5e9); /* vivid sky-blue */
+  box-shadow:0 14px 48px rgba(14,165,233,0.30), 0 0 36px rgba(6,182,212,0.20);
+  color: #ffffff;
+  text-shadow:0 0 14px rgba(255,255,255,0.95);
+}
+
+/* Dark-mode button and input fixes: ensure vivid colors and readable text */
+[data-theme='dark'] .nav .btn{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+  text-shadow: 0 0 6px rgba(255,255,255,0.06);
+  box-shadow: 0 6px 20px rgba(2,6,23,0.5);
+}
+
+[data-theme='dark'] .nav .btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 36px rgba(2,6,23,0.55);
+}
+
+[data-theme='dark'] .nav .btn.accent{
+  background: linear-gradient(90deg,#06b6d4,#0ea5e9); /* vivid sky-blue */
+  box-shadow:0 12px 40px rgba(14,165,233,0.25);
+  color: #ffffff;
+  text-shadow:0 0 12px rgba(255,255,255,0.95);
+}
+
+/* Inputs in modals and forms should be readable in dark mode */
+[data-theme='dark'] input,
+[data-theme='dark'] textarea,
+[data-theme='dark'] select{
+  background: rgba(255,255,255,0.02);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+[data-theme='dark'] .modal{background:var(--card)}
+[data-theme='dark'] .modal input::placeholder{color: rgba(230,238,248,0.5)}
+
+/* Ensure task item text is readable when not checked */
+[data-theme='dark'] .task-card .task-item div{color:var(--text);opacity:1}
+
+
+/* Make Add Task more prominent */
+.nav .btn:nth-child(2){ /* assumes Add Task is the 2nd interactive element */
+  padding:12px 16px;border-radius:14px;font-weight:700;letter-spacing:0.2px;text-shadow:0 0 10px rgba(255,255,255,0.9)
+}
+
+/* Theme toggle button styling */
+.nav .theme-toggle{display:inline-flex;align-items:center;padding:8px 10px;border-radius:999px;background:linear-gradient(90deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02));}
+.nav .theme-toggle .theme-icon{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:8px;background:rgba(255,255,255,0.6);box-shadow:0 2px 10px rgba(255,255,255,0.08),0 0 12px rgba(99,102,241,0.08)}
+
+/* Active/selected visual cue for nav links */
+.nav .btn[aria-current='page']{outline:2px solid rgba(99,102,241,0.2);box-shadow:0 6px 18px rgba(99,102,241,0.08)}
+
+/* Improve card and task visuals */
+.card{transition:transform .12s ease, box-shadow .12s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(2,6,23,0.10)}
+
+/* Ensure text inside cards and modals is always high-contrast */
+.card, .task-card, .modal{color:var(--text)}
+.card h3, .card h2{color:var(--text)}
+
+/* Chart canvas should inherit transparent bg and visible text */
+.card canvas{background:transparent;color:var(--text)}
+
+/* Make modal inputs readable across themes */
+.modal input, .modal textarea{color:var(--text);background:transparent}
+.modal input::placeholder, .modal textarea::placeholder{color:rgba(15,23,32,0.5)}
+
+/* Smaller, centered chart card for Doughnut in Analysis */
+.chart-small{padding:12px;border-radius:12px}
+
+
+.task-card{transition:all .18s cubic-bezier(.2,.9,.2,1)}
+.task-card .task-item{padding:8px;border-radius:8px}
+.task-card .task-item input[type="checkbox"]{width:18px;height:18px;accent-color:var(--accent)}
+.task-card .task-item div{transition:opacity .12s ease, transform .12s ease}
+.task-card .task-item input[type="checkbox"]:checked + div{opacity:0.6;text-decoration:line-through;transform:translateX(6px)}
+
+/* Delete button distinct */
+.task-card .btn{background:transparent;border:1px solid rgba(0,0,0,0.04);padding:6px 8px}
+.task-card .btn:hover{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.12)}
+.task-card .btn:active{transform:none}
+.task-card .btn.delete{color:var(--bad);border-color:rgba(239,68,68,0.12)}
+
+/* Modal transitions */
+.modal-backdrop{animation:fadeIn .18s ease}
+.modal{transform:translateY(-6px);animation:popIn .18s ease forwards}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{from{opacity:0;transform:translateY(6px) scale(.995)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Responsive tweaks for smaller screens */
+@media (max-width:640px){
+  .nav .btn{padding:8px 10px;font-size:14px}
+  .brand{font-size:1rem}
+}
+
+/* Calendar header & controls */
+.calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.month-title{font-size:1.05rem;font-weight:700}
+.month-controls{display:flex;gap:8px;align-items:center}
+.month-controls .btn{padding:8px 10px;border-radius:10px}
+
+/* Ensure links don't show underline globally for nav buttons */
+.nav a{color:inherit;text-decoration:none}
+
